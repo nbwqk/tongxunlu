@@ -86,6 +86,21 @@ void AddPerson(AddressBooks *abs)
     }
 }
 
+void ShowPerson(AddressBooks *abs)
+{
+    if(abs->m_Size==0)
+    {
+        cout<<"通讯录里没有联系人。"<<endl;
+    } else{
+        cout<<"姓名"<<'\t'<<"性别"<<"\t"<<"年龄"<<"\t"<<"电话"<<"\t"<<"住址"<<endl;
+        for(int i=0;i<abs->m_Size;i++)
+        {
+            cout<<abs->personArray[i].m_Name<<"\t"<<abs->personArray[i].m_Sex<<"\t"<<abs->personArray[i].m_Age<<"\t"<<abs->personArray[i].m_Phone<<"\t"<<abs->personArray[i].m_Addr<<endl;
+        }
+        system("pause");
+        system("cls");
+    }
+}
 int main() {
     while (true)
     {
@@ -99,6 +114,7 @@ int main() {
                 AddPerson(&abs);
                 break;
             case 2:
+                ShowPerson(&abs);
                 break;
             case 3:
                 break;
