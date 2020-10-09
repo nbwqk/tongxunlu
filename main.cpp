@@ -26,7 +26,7 @@ void ShowMenu()
     cout<<"*****  0.退出通讯录  *****"<<endl;
     cout<<"************************"<<endl;
 }
-void AddPerson(AddressBooks *abs)
+void AddPerson(AddressBooks * abs)
 {
     if(abs->m_Size==MAX)
     {
@@ -86,7 +86,7 @@ void AddPerson(AddressBooks *abs)
     }
 }
 
-void ShowPerson(AddressBooks *abs)
+void ShowPerson(AddressBooks * abs)
 {
     if(abs->m_Size==0)
     {
@@ -95,19 +95,41 @@ void ShowPerson(AddressBooks *abs)
         cout<<"姓名"<<'\t'<<"性别"<<"\t"<<"年龄"<<"\t"<<"电话"<<"\t"<<"住址"<<endl;
         for(int i=0;i<abs->m_Size;i++)
         {
-            cout<<abs->personArray[i].m_Name<<"\t"<<abs->personArray[i].m_Sex<<"\t"<<abs->personArray[i].m_Age<<"\t"<<abs->personArray[i].m_Phone<<"\t"<<abs->personArray[i].m_Addr<<endl;
+            cout<<abs->personArray[i].m_Name<<"\t"<<(abs->personArray[i].m_Sex==1?"男":"女")<<"\t"<<abs->personArray[i].m_Age<<"\t"<<abs->personArray[i].m_Phone<<"\t"<<abs->personArray[i].m_Addr<<endl;
         }
         system("pause");
         system("cls");
     }
 }
+
+int isExit(AddressBooks * abs,string name) // 检测通讯录的人是否存在。
+{
+    for(int i=0;i<abs->m_Size;i++)
+    {
+        if(abs->personArray[i].m_Name==name)
+        {
+            return i;                    // 存在返回此人在数组中的序号
+        }
+    }
+    return -1;                           // 不存在返回-1
+}
+
+void deletePerson(AddressBooks * abs)
+{
+    cout<<"请输入要删除联系人的姓名："<<endl;
+    string name;
+    cin>>name;
+    int ret;
+    ret=isExit(abs,name);
+
+}
 int main() {
+    int select;
+    AddressBooks abs;
+    abs.m_Size=0;
     while (true)
     {
         ShowMenu();
-        int select;
-        AddressBooks abs;
-        abs.m_Size=0;
         cin >> select;
         switch (select) {
             case 1:
