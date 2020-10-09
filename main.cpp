@@ -97,9 +97,10 @@ void ShowPerson(AddressBooks * abs)
         {
             cout<<abs->personArray[i].m_Name<<"\t"<<(abs->personArray[i].m_Sex==1?"男":"女")<<"\t"<<abs->personArray[i].m_Age<<"\t"<<abs->personArray[i].m_Phone<<"\t"<<abs->personArray[i].m_Addr<<endl;
         }
-        system("pause");
-        system("cls");
     }
+
+    system("pause");
+    system("cls");
 }
 
 int isExit(AddressBooks * abs,string name) // 检测通讯录的人是否存在。
@@ -119,10 +120,101 @@ void deletePerson(AddressBooks * abs)
     cout<<"请输入要删除联系人的姓名："<<endl;
     string name;
     cin>>name;
-    int ret;
-    ret=isExit(abs,name);
+    int ret=isExit(abs,name);
+
+    if(ret!=-1)
+    {
+       for(int i=ret;i<abs->m_Size;i++)
+       {
+           abs->personArray[i]=abs->personArray[i+1];  // 数据前移操作
+       }
+       abs->m_Size--;
+       cout<<"删除成功。"<<endl;
+    }else{
+        cout<<"查无此人。"<<endl;
+    }
+    system("pause");
+    system("cls");
 
 }
+
+void findPerson(AddressBooks *abs)
+{
+    cout<<"请输入要查找的联系人姓名："<<endl;
+    string name;
+    cin>>name;
+    int ret=isExit(abs,name);
+
+    if(ret!=-1)
+    {
+        cout<<"姓名"<<"\t"<<"性别"<<"\t"<<"年龄"<<"\t"<<"电话"<<"\t"<<"住址"<<endl;
+        cout<<abs->personArray[ret].m_Name<<"\t"<<(abs->personArray[ret].m_Sex?1,"男":"女")<<"\t"<<abs->personArray[ret].m_Age<<"\t"<<abs->personArray[ret].m_Phone<<"\t"<<abs->personArray[ret].m_Addr<<endl;
+    }else{
+        cout<<"查无此人。"<<endl;
+    }
+    system("pause");
+    system("cls");
+}
+
+void modifyPerson(AddressBooks *abs)
+{
+    cout<<"请输入要修改的联系人姓名："<<endl;
+    string name;
+    cin>>name;
+    int ret=isExit(abs,name);
+
+    if(ret!=-1)
+    {
+       cout<<"请输入要修改的姓名："<<endl;
+       string x_name;
+       cin>>x_name;
+       abs->personArray[ret].m_Name=x_name;
+
+       cout<<"请输入要修改的性别："<<endl;
+       cout<<"（输入1表示男，输入2表示女）"<<endl;
+       int x_sex;
+       while (true)
+       {
+           cin>>x_sex;
+           if(x_sex==1 || x_sex==2)
+           {
+               abs->personArray[ret].m_Sex=x_sex;
+               break;
+           }else{
+               cout<<"请重新输入："<<endl;
+           }
+       }
+
+       cout<<"请输入要修改的年龄："<<endl;
+       int x_age;
+       cin>>x_age;
+       abs->personArray[ret].m_Age=x_age;
+
+       cout<<"请输入要修改的电话："<<endl;
+       string x_phone;
+       cin>>x_phone;
+       abs->personArray[ret].m_Phone=x_phone;
+
+       cout<<"请输入要修改的住址："<<endl;
+       string x_address;
+       cin>>x_address;
+       abs->personArray[ret].m_Addr=x_address;
+       cout<<"修改成功。";
+    }else{
+        cout<<"查无此人。"<<endl;
+    }
+    system("pause");
+    system("cls");
+}
+
+void cleanPerson(AddressBooks *abs)
+{
+    abs->m_Size=0;
+    cout<<"数据已清空。";
+    system("pause");
+    system("cls");
+}
+
 int main() {
     int select;
     AddressBooks abs;
@@ -139,12 +231,16 @@ int main() {
                 ShowPerson(&abs);
                 break;
             case 3:
+                deletePerson(&abs);
                 break;
             case 4:
+                findPerson(&abs);
                 break;
             case 5:
+                modifyPerson(&abs);
                 break;
             case 6:
+                cleanPerson(&abs);
                 break;
             case 0:
                 cout<<"欢迎下次再来！"<<endl;
